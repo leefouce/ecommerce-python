@@ -4,7 +4,13 @@ Incremental FastAPI ecommerce backend learning project.
 
 ## Current phase
 
-Phase 0: FastAPI project skeleton with a `/health` endpoint.
+Phase 1: Product listing and product detail with mock data.
+
+Implemented endpoints:
+
+- `GET /health`
+- `GET /products`
+- `GET /products/{product_id}`
 
 ## Setup
 
