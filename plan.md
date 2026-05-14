@@ -22,6 +22,7 @@
 8. Use TDD for new behavior: write a failing test first, then implement the minimal code to pass.
 9. Explain Hermes workflow concepts as we go: tools, skills, memory, and multi-agent.
 10. Introduce multi-agent only when the project is complex enough to benefit from it.
+11. Use a git-flow style workflow: `main` stays stable, `develop` is the integration branch, and new work happens on `feature/*` branches before merging back.
 
 ---
 
@@ -69,10 +70,34 @@ curl http://127.0.0.1:8000/health
 
 ### Phase 1: Product listing and detail with mock data
 
-- Add product router.
-- Add Pydantic response schemas.
-- Use in-memory mock data first.
-- Write tests for list/detail behavior.
+**Branch:** `feature/phase-1-products` from `develop`.
+
+**Objective:** Add read-only product endpoints backed by in-memory mock data. Do not add database, admin management, cart, auth, or checkout yet.
+
+**Endpoints:**
+
+- `GET /products` returns the mock product list.
+- `GET /products/{product_id}` returns one product.
+- Missing product detail returns `404` with `{"detail": "Product not found"}`.
+
+**Files:**
+
+- Create: `tests/test_products.py`
+- Create: `app/schemas/__init__.py`
+- Create: `app/schemas/product.py`
+- Create: `app/data/__init__.py`
+- Create: `app/data/products.py`
+- Create: `app/api/products.py`
+- Modify: `app/main.py`
+
+**TDD workflow:**
+
+1. Write product endpoint tests first.
+2. Run `pytest tests/test_products.py -v` and confirm failure because `/products` does not exist.
+3. Add schema, mock data, and router.
+4. Register the router in `app/main.py`.
+5. Run `pytest` and confirm all tests pass.
+6. Push the feature branch and open a PR into `develop`.
 
 ### Phase 2: SQLite + SQLAlchemy foundation
 
