@@ -17,6 +17,11 @@ env/
 .env
 .env.*
 
+# Runtime data
+*.db
+*.sqlite
+*.sqlite3
+
 # IDE/editor
 .DS_Store
 .vscode/

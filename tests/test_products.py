@@ -6,7 +6,7 @@ from app.main import app
 client = TestClient(app)
 
 
-def test_list_products_returns_mock_products() -> None:
+def test_list_products_returns_seeded_products() -> None:
     response = client.get("/products")
 
     assert response.status_code == 200

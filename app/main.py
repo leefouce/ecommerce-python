@@ -2,6 +2,9 @@ from fastapi import FastAPI
 
 from app.api.health import router as health_router
 from app.api.products import router as products_router
+from app.db.init_db import init_db
+
+init_db()
 
 app = FastAPI(
     title="Ecommerce API",

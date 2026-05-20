@@ -101,10 +101,43 @@ curl http://127.0.0.1:8000/health
 
 ### Phase 2: SQLite + SQLAlchemy foundation
 
-- Add database session setup.
-- Add Product model.
-- Use SQLite for local learning speed.
-- Keep PostgreSQL for a later migration phase.
+**Branch:** `feature/phase-2-sqlalchemy` from `develop`.
+
+**Objective:** Replace in-memory mock product storage with a small SQLite + SQLAlchemy foundation while keeping the public product API unchanged. Do not add auth, cart, checkout, admin CRUD, Alembic, or PostgreSQL yet.
+
+**Build plan:**
+
+1. Add SQLAlchemy as a runtime dependency in `pyproject.toml`.
+2. Create database infrastructure:
+   - `app/db/base.py` for SQLAlchemy `Base`.
+   - `app/db/session.py` for SQLite engine, `SessionLocal`, and FastAPI `get_db` dependency.
+3. Create `app/models/product.py` with a `ProductModel` table.
+4. Create `app/repositories/products.py` with read-only product query helpers.
+5. Seed the local SQLite database with the same two learning products currently used by mock data.
+6. Update `app/api/products.py` to read from a database session instead of `app/data/products.py`.
+7. Keep response JSON exactly the same for:
+   - `GET /products`
+   - `GET /products/{product_id}`
+   - missing product 404 response
+8. Update README current phase notes.
+
+**TDD workflow:**
+
+1. Add a database-focused failing test in `tests/test_database.py` proving tables can be created and products can be queried through the repository.
+2. Run the new test and confirm it fails because DB modules do not exist yet.
+3. Add SQLAlchemy dependency and minimal DB/model/repository code.
+4. Run `pytest tests/test_database.py -v` and confirm it passes.
+5. Run existing product endpoint tests to ensure API behavior did not change.
+6. Run full `pytest`.
+7. Commit the phase with `feat: add SQLAlchemy product storage foundation`.
+
+**Hermes cooperation plan:**
+
+- **Main Hermes agent:** coordinates the branch, keeps the plan updated, edits files, and runs verification commands.
+- **Skills:** `writing-plans` defines this phased plan; `test-driven-development` enforces red-green-refactor; `subagent-driven-development` is available for larger phases.
+- **Tools:** `read_file/search_files` inspect project context; `patch/write_file` change code; `terminal` runs git, install, and tests; `todo` tracks current session progress.
+- **Subagents:** not necessary for this small foundation phase because most files are tightly coupled. In later auth/cart phases, Hermes can use separate subagents for implementation, spec review, and code-quality review.
+- **Memory:** only stable project workflow facts are stored; temporary phase progress stays in git and `plan.md`.
 
 ### Phase 3: User registration and login
 

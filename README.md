@@ -4,13 +4,14 @@ Incremental FastAPI ecommerce backend learning project.
 
 ## Current phase
 
-Phase 1: Product listing and product detail with mock data.
+Phase 2: SQLite + SQLAlchemy foundation.
 
 Implemented endpoints:
 
 - `GET /health`
 - `GET /products`
 - `GET /products/{product_id}`
+- product data now persists in local SQLite through SQLAlchemy
 
 ## Setup
 
