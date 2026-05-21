@@ -17,6 +17,18 @@ Implemented so far:
 - user table foundation with hashed password storage and verification helpers
 - registration rejects duplicate emails and never returns password hashes
 - login verifies the password and returns a bearer access token
+- access tokens include expiration claims and are signed with a settings-backed secret
+
+## Environment configuration
+
+Optional local development settings:
+
+```bash
+export APP_TOKEN_SECRET="replace-with-a-long-random-secret"
+export APP_ACCESS_TOKEN_EXPIRE_MINUTES="30"
+```
+
+If unset, the app uses learning-friendly local defaults. Do not use the default secret outside local development.
 
 ## Setup
 

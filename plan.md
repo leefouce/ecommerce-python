@@ -161,11 +161,11 @@ curl http://127.0.0.1:8000/health
 - Add JWT-style access token creation and validation helpers.
 - Return a bearer access token from `POST /auth/login`.
 - Add tests for successful token issue and tampered token rejection.
+- Move token signing secret into environment-based settings.
+- Add token expiration claims and reject expired tokens.
 
 **Later Phase 3 slices:**
 
-- Move token secret into environment-based configuration.
-- Add token expiration claims.
 - Add protected endpoint/current-user dependency using the access token.
 
 ### Phase 4: Shopping cart
