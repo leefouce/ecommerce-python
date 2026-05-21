@@ -141,10 +141,24 @@ curl http://127.0.0.1:8000/health
 
 ### Phase 3: User registration and login
 
-- Add User model.
-- Add password hashing.
-- Add JWT login flow.
-- Add auth tests.
+**Branch:** `feature/phase-3-auth` from `develop`.
+
+**Objective:** Add the authentication foundation incrementally. Start with a database-backed user model and password hashing, then add registration/login endpoints and JWT flow in later slices.
+
+**Current Phase 3.1 slice:**
+
+- Add `UserModel` with `email` and `password_hash` fields.
+- Add password hashing and verification helpers.
+- Ensure the `users` table is registered when local SQLite tables are created.
+- Add tests proving raw passwords are not stored and valid passwords can be verified.
+
+**Later Phase 3 slices:**
+
+- Add registration request/response schemas.
+- Add `POST /auth/register`.
+- Add login request/response schemas.
+- Add JWT token creation and `POST /auth/login`.
+- Add auth tests for duplicate email, invalid login, and successful token issue.
 
 ### Phase 4: Shopping cart
 

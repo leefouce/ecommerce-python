@@ -3,6 +3,10 @@ from sqlalchemy.orm import Session
 from app.db.base import Base
 from app.db.session import engine
 from app.models.product import ProductModel
+from app.models.user import UserModel
+
+# Import UserModel so SQLAlchemy registers the users table before create_all runs.
+_ = UserModel
 
 SEED_PRODUCTS = [
     {
