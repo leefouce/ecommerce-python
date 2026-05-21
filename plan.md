@@ -163,10 +163,12 @@ curl http://127.0.0.1:8000/health
 - Add tests for successful token issue and tampered token rejection.
 - Move token signing secret into environment-based settings.
 - Add token expiration claims and reject expired tokens.
+- Add protected endpoint/current-user dependency using the access token.
+- Add `GET /auth/me` to return the current authenticated user.
 
 **Later Phase 3 slices:**
 
-- Add protected endpoint/current-user dependency using the access token.
+- Add authorization helpers for future user-owned resources.
 
 ### Phase 4: Shopping cart
 

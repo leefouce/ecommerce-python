@@ -13,11 +13,13 @@ Implemented so far:
 - `GET /products/{product_id}`
 - `POST /auth/register`
 - `POST /auth/login`
+- `GET /auth/me`
 - product data now persists in local SQLite through SQLAlchemy
 - user table foundation with hashed password storage and verification helpers
 - registration rejects duplicate emails and never returns password hashes
 - login verifies the password and returns a bearer access token
 - access tokens include expiration claims and are signed with a settings-backed secret
+- `GET /auth/me` uses the bearer token to return the current authenticated user
 
 ## Environment configuration
 

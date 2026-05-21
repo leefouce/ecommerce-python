@@ -103,3 +103,35 @@ def test_login_returns_401_when_password_is_wrong(client: TestClient) -> None:
 
     assert response.status_code == 401
     assert response.json() == {"detail": "Invalid email or password"}
+
+
+def test_auth_me_returns_current_user_with_bearer_token(client: TestClient) -> None:
+    payload = {"email": "buyer@example.com", "password": "correct horse battery staple"}
+    client.post("/auth/register", json=payload)
+    login_response = client.post("/auth/login", json=payload)
+    access_token = login_response.json()["access_token"]
+
+    response = client.get(
+        "/auth/me",
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+
+    assert response.status_code == 200
+    assert response.json() == {"id": 1, "email": "buyer@example.com"}
+
+
+def test_auth_me_returns_401_without_bearer_token(client: TestClient) -> None:
+    response = client.get("/auth/me")
+
+    assert response.status_code == 401
+    assert response.json() == {"detail": "Not authenticated"}
+
+
+def test_auth_me_returns_401_for_invalid_bearer_token(client: TestClient) -> None:
+    response = client.get(
+        "/auth/me",
+        headers={"Authorization": "Bearer invalid.token.value"},
+    )
+
+    assert response.status_code == 401
+    assert response.json() == {"detail": "Invalid authentication credentials"}
