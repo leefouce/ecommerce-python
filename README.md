@@ -16,6 +16,7 @@ Implemented so far:
 - product data now persists in local SQLite through SQLAlchemy
 - user table foundation with hashed password storage and verification helpers
 - registration rejects duplicate emails and never returns password hashes
+- login verifies the password and returns a bearer access token
 
 ## Setup
 

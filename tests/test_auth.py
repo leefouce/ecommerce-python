@@ -76,14 +76,18 @@ def test_register_returns_400_when_unique_constraint_fails(
     assert response.json() == {"detail": "Email already registered"}
 
 
-def test_login_returns_user_when_password_is_correct(client: TestClient) -> None:
+def test_login_returns_access_token_when_password_is_correct(client: TestClient) -> None:
     payload = {"email": "buyer@example.com", "password": "correct horse battery staple"}
     client.post("/auth/register", json=payload)
 
     response = client.post("/auth/login", json=payload)
 
     assert response.status_code == 200
-    assert response.json() == {"id": 1, "email": "buyer@example.com"}
+    body = response.json()
+    assert body["token_type"] == "bearer"
+    assert isinstance(body["access_token"], str)
+    assert body["access_token"].count(".") == 2
+    assert "password_hash" not in body
 
 
 def test_login_returns_401_when_password_is_wrong(client: TestClient) -> None:

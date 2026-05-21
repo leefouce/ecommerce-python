@@ -158,11 +158,15 @@ curl http://127.0.0.1:8000/health
 - Add login request schema and `POST /auth/login`.
 - Verify submitted passwords against stored password hashes.
 - Return `401` for invalid login credentials.
+- Add JWT-style access token creation and validation helpers.
+- Return a bearer access token from `POST /auth/login`.
+- Add tests for successful token issue and tampered token rejection.
 
 **Later Phase 3 slices:**
 
-- Add JWT token creation and return an access token from `POST /auth/login`.
-- Add auth tests for successful token issue.
+- Move token secret into environment-based configuration.
+- Add token expiration claims.
+- Add protected endpoint/current-user dependency using the access token.
 
 ### Phase 4: Shopping cart
 
