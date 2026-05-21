@@ -12,6 +12,7 @@ Implemented so far:
 - `GET /products`
 - `GET /products/{product_id}`
 - `POST /auth/register`
+- `POST /auth/login`
 - product data now persists in local SQLite through SQLAlchemy
 - user table foundation with hashed password storage and verification helpers
 - registration rejects duplicate emails and never returns password hashes

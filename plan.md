@@ -155,12 +155,14 @@ curl http://127.0.0.1:8000/health
 - Add `POST /auth/register`.
 - Reject duplicate email registration with `400`.
 - Never return password hashes from auth responses.
+- Add login request schema and `POST /auth/login`.
+- Verify submitted passwords against stored password hashes.
+- Return `401` for invalid login credentials.
 
 **Later Phase 3 slices:**
 
-- Add login request/response schemas.
-- Add JWT token creation and `POST /auth/login`.
-- Add auth tests for invalid login and successful token issue.
+- Add JWT token creation and return an access token from `POST /auth/login`.
+- Add auth tests for successful token issue.
 
 ### Phase 4: Shopping cart
 

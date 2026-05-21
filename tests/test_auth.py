@@ -74,3 +74,28 @@ def test_register_returns_400_when_unique_constraint_fails(
 
     assert response.status_code == 400
     assert response.json() == {"detail": "Email already registered"}
+
+
+def test_login_returns_user_when_password_is_correct(client: TestClient) -> None:
+    payload = {"email": "buyer@example.com", "password": "correct horse battery staple"}
+    client.post("/auth/register", json=payload)
+
+    response = client.post("/auth/login", json=payload)
+
+    assert response.status_code == 200
+    assert response.json() == {"id": 1, "email": "buyer@example.com"}
+
+
+def test_login_returns_401_when_password_is_wrong(client: TestClient) -> None:
+    client.post(
+        "/auth/register",
+        json={"email": "buyer@example.com", "password": "correct horse battery staple"},
+    )
+
+    response = client.post(
+        "/auth/login",
+        json={"email": "buyer@example.com", "password": "wrong password"},
+    )
+
+    assert response.status_code == 401
+    assert response.json() == {"detail": "Invalid email or password"}
