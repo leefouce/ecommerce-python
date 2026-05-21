@@ -145,20 +145,22 @@ curl http://127.0.0.1:8000/health
 
 **Objective:** Add the authentication foundation incrementally. Start with a database-backed user model and password hashing, then add registration/login endpoints and JWT flow in later slices.
 
-**Current Phase 3.1 slice:**
+**Current Phase 3.1/3.2 slices:**
 
 - Add `UserModel` with `email` and `password_hash` fields.
 - Add password hashing and verification helpers.
 - Ensure the `users` table is registered when local SQLite tables are created.
 - Add tests proving raw passwords are not stored and valid passwords can be verified.
+- Add registration request/response schemas.
+- Add `POST /auth/register`.
+- Reject duplicate email registration with `400`.
+- Never return password hashes from auth responses.
 
 **Later Phase 3 slices:**
 
-- Add registration request/response schemas.
-- Add `POST /auth/register`.
 - Add login request/response schemas.
 - Add JWT token creation and `POST /auth/login`.
-- Add auth tests for duplicate email, invalid login, and successful token issue.
+- Add auth tests for invalid login and successful token issue.
 
 ### Phase 4: Shopping cart
 
