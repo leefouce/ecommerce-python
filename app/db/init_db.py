@@ -2,11 +2,13 @@ from sqlalchemy.orm import Session
 
 from app.db.base import Base
 from app.db.session import engine
+from app.models.cart import CartItemModel
+from app.models.order import OrderItemModel, OrderModel
 from app.models.product import ProductModel
 from app.models.user import UserModel
 
-# Import UserModel so SQLAlchemy registers the users table before create_all runs.
-_ = UserModel
+# Import models so SQLAlchemy registers their tables before create_all runs.
+_ = (CartItemModel, OrderItemModel, OrderModel, UserModel)
 
 SEED_PRODUCTS = [
     {

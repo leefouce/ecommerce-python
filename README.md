@@ -4,7 +4,7 @@ Incremental FastAPI ecommerce backend learning project.
 
 ## Current phase
 
-Phase 3: User registration and login.
+Phase 5: Mock checkout and order history.
 
 Implemented so far:
 
@@ -20,6 +20,12 @@ Implemented so far:
 - login verifies the password and returns a bearer access token
 - access tokens include expiration claims and are signed with a settings-backed secret
 - `GET /auth/me` uses the bearer token to return the current authenticated user
+- `POST /cart/items` lets an authenticated user add a product to their cart
+- `GET /cart/items` lists the authenticated user's cart items
+- `DELETE /cart/items/{product_id}` removes a product from the authenticated user's cart
+- cart tests cover authentication, missing products, invalid quantities, and user isolation
+- `POST /orders/checkout` creates a mock order from the authenticated user's cart and clears the cart
+- `GET /orders` lists the authenticated user's order history
 
 ## Environment configuration
 
