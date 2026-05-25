@@ -238,6 +238,33 @@ curl http://127.0.0.1:8000/health
 4. Verify focused migration tests, Alembic upgrade on a temporary SQLite database, and full `pytest`.
 5. Commit with `feat: add postgres migration foundation`.
 
+### Phase 8: Docker deployment foundation
+
+**Branch:** `feature/phase-8-docker-deployment` from `develop`.
+
+**Objective:** Add a deployment-friendly Docker foundation using the PostgreSQL/Alembic work from Phase 7. Real payment integration remains out of scope because the project rules explicitly say not to add real payment integration yet.
+
+**Implemented scope:**
+
+- Add a production-oriented `Dockerfile` for the FastAPI app.
+- Add `compose.yaml` with:
+  - `api` service for the app.
+  - `db` service using `postgres:16`.
+  - PostgreSQL healthcheck and persistent volume.
+  - `APP_DATABASE_URL` wired to the Compose database service.
+- Add `scripts/start.sh` so containers run `alembic upgrade head` before starting `uvicorn`.
+- Add `.env.example` documenting required deployment variables.
+- Add `.dockerignore` to keep local runtime artifacts out of build context.
+- Add tests that lock the deployment configuration structure.
+
+**TDD workflow:**
+
+1. Add failing Docker/deployment config tests in `tests/test_deployment_config.py`.
+2. Confirm failure because Dockerfile, compose file, start script, env example, and dockerignore do not exist yet.
+3. Add the minimal deployment files to satisfy the tests.
+4. Verify focused deployment tests, Docker/Compose config checks where available, and full `pytest`.
+5. Commit with `feat: add docker deployment foundation`.
+
 ---
 
 ## Hermes Learning Notes
