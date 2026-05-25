@@ -4,7 +4,7 @@ Incremental FastAPI ecommerce backend learning project.
 
 ## Current phase
 
-Phase 5: Mock checkout and order history.
+Phase 6: Basic admin product management.
 
 Implemented so far:
 
@@ -26,6 +26,11 @@ Implemented so far:
 - cart tests cover authentication, missing products, invalid quantities, and user isolation
 - `POST /orders/checkout` creates a mock order from the authenticated user's cart and clears the cart
 - `GET /orders` lists the authenticated user's order history
+- users have an `is_admin` flag for authorization checks
+- `POST /admin/products` lets admins create products
+- `PATCH /admin/products/{product_id}` lets admins update product fields
+- `DELETE /admin/products/{product_id}` lets admins delete products
+- admin product endpoints require authentication and reject non-admin users
 
 ## Environment configuration
 

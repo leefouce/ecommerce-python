@@ -184,9 +184,29 @@ curl http://127.0.0.1:8000/health
 
 ### Phase 6: Basic admin product management
 
-- Add admin-only product create/update/delete.
-- Add role checks.
-- Add authorization tests.
+**Branch:** `feature/phase-6-admin-products` from `develop`.
+
+**Objective:** Add basic admin-only product management while keeping public product browsing read-only.
+
+**Implemented scope:**
+
+- Add an `is_admin` flag to users for authorization checks.
+- Add admin-only product create/update/delete endpoints:
+  - `POST /admin/products`
+  - `PATCH /admin/products/{product_id}`
+  - `DELETE /admin/products/{product_id}`
+- Reject unauthenticated requests with `401`.
+- Reject authenticated non-admin users with `403`.
+- Return `404` when admins update/delete missing products.
+- Keep public `GET /products` and `GET /products/{product_id}` behavior unchanged.
+
+**TDD workflow:**
+
+1. Add failing authorization and CRUD tests in `tests/test_admin_products.py`.
+2. Confirm failure because users have no admin flag and admin endpoints do not exist.
+3. Add user role field, admin dependency, product schemas/repository helpers, and admin router.
+4. Run focused admin tests and full `pytest`.
+5. Commit with `feat: add admin product management`.
 
 ### Phase 7: PostgreSQL migration
 
