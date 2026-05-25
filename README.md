@@ -4,7 +4,7 @@ Incremental FastAPI ecommerce backend learning project.
 
 ## Current phase
 
-Phase 7: PostgreSQL migration.
+Phase 8: Docker deployment foundation.
 
 Implemented so far:
 
@@ -31,6 +31,7 @@ Implemented so far:
 - `PATCH /admin/products/{product_id}` lets admins update product fields
 - `DELETE /admin/products/{product_id}` lets admins delete products
 - admin product endpoints require authentication and reject non-admin users
+- deployment config includes a Dockerfile, Docker Compose PostgreSQL stack, `.env.example`, and container start script
 
 ## Environment configuration
 
@@ -53,6 +54,17 @@ alembic upgrade head
 ```
 
 For local SQLite migration testing without touching `ecommerce.db`, point `APP_DATABASE_URL` at a temporary database file before running Alembic.
+
+## Docker Compose deployment
+
+Create a local env file from the example and change the secrets before running containers:
+
+```bash
+cp .env.example .env
+docker compose up --build
+```
+
+The `api` container waits for PostgreSQL to become healthy, runs `alembic upgrade head`, then starts `uvicorn` on port `8000`.
 
 ## Setup
 
