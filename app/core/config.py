@@ -6,6 +6,7 @@ from dataclasses import dataclass
 class Settings:
     token_secret: str = "development-secret-change-me"
     access_token_expire_minutes: int = 30
+    database_url: str = "sqlite:///./ecommerce.db"
 
 
 def get_settings() -> Settings:
@@ -17,4 +18,5 @@ def get_settings() -> Settings:
                 str(Settings.access_token_expire_minutes),
             )
         ),
+        database_url=os.getenv("APP_DATABASE_URL", Settings.database_url),
     )

@@ -210,9 +210,33 @@ curl http://127.0.0.1:8000/health
 
 ### Phase 7: PostgreSQL migration
 
-- Add PostgreSQL configuration.
-- Add Alembic migrations if appropriate.
-- Keep tests deterministic.
+**Branch:** `feature/phase-7-postgres` from `develop`.
+
+**Objective:** Make the app ready for PostgreSQL deployments while keeping the existing SQLite-based local/test workflow deterministic.
+
+**Implemented scope:**
+
+- Add `APP_DATABASE_URL` setting with SQLite as the local default.
+- Build SQLAlchemy engine options from the database URL:
+  - SQLite keeps `check_same_thread=False`.
+  - PostgreSQL does not receive SQLite-only connect arguments.
+- Add `psycopg[binary]` as the PostgreSQL driver dependency.
+- Add Alembic configuration and an initial migration for the current schema:
+  - `products`
+  - `users`
+  - `cart_items`
+  - `orders`
+  - `order_items`
+- Keep `init_db()` as SQLite-only dev seeding/compatibility logic so PostgreSQL schema changes are handled by migrations.
+- Add tests that lock the configuration and migration structure.
+
+**TDD workflow:**
+
+1. Add failing PostgreSQL/migration tests in `tests/test_postgres_migration.py`.
+2. Confirm failure because database URL config, engine option helper, and Alembic files do not exist yet.
+3. Add environment-driven database config, PostgreSQL dependencies, Alembic files, and initial schema migration.
+4. Verify focused migration tests, Alembic upgrade on a temporary SQLite database, and full `pytest`.
+5. Commit with `feat: add postgres migration foundation`.
 
 ---
 

@@ -3,12 +3,19 @@ from collections.abc import Generator
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 
-DATABASE_URL = "sqlite:///./ecommerce.db"
+from app.core.config import get_settings
 
-engine = create_engine(
-    DATABASE_URL,
-    connect_args={"check_same_thread": False},
-)
+DATABASE_URL = get_settings().database_url
+
+
+def get_engine_options(database_url: str) -> dict[str, object]:
+    if database_url.startswith("sqlite"):
+        return {"connect_args": {"check_same_thread": False}}
+
+    return {}
+
+
+engine = create_engine(DATABASE_URL, **get_engine_options(DATABASE_URL))
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
