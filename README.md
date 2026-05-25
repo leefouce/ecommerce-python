@@ -4,7 +4,7 @@ Incremental FastAPI ecommerce backend learning project.
 
 ## Current phase
 
-Phase 6: Basic admin product management.
+Phase 7: PostgreSQL migration.
 
 Implemented so far:
 
@@ -39,9 +39,20 @@ Optional local development settings:
 ```bash
 export APP_TOKEN_SECRET="replace-with-a-long-random-secret"
 export APP_ACCESS_TOKEN_EXPIRE_MINUTES="30"
+export APP_DATABASE_URL="postgresql+psycopg://shop:password@localhost:5432/ecommerce"
 ```
 
-If unset, the app uses learning-friendly local defaults. Do not use the default secret outside local development.
+If `APP_DATABASE_URL` is unset, the app uses `sqlite:///./ecommerce.db` for learning-friendly local development. Do not use the default token secret outside local development.
+
+## Database migrations
+
+Phase 7 introduces Alembic migrations and PostgreSQL-ready configuration.
+
+```bash
+alembic upgrade head
+```
+
+For local SQLite migration testing without touching `ecommerce.db`, point `APP_DATABASE_URL` at a temporary database file before running Alembic.
 
 ## Setup
 

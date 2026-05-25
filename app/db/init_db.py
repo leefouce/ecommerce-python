@@ -44,6 +44,9 @@ SEED_PRODUCTS = [
 
 
 def init_db() -> None:
+    if engine.url.get_backend_name() != "sqlite":
+        return
+
     Base.metadata.create_all(bind=engine)
     _ensure_user_admin_column()
 
