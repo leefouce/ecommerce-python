@@ -1,3 +1,4 @@
+from sqlalchemy import inspect, text
 from sqlalchemy.orm import Session
 
 from app.db.base import Base
@@ -9,6 +10,22 @@ from app.models.user import UserModel
 
 # Import models so SQLAlchemy registers their tables before create_all runs.
 _ = (CartItemModel, OrderItemModel, OrderModel, UserModel)
+
+
+def _ensure_user_admin_column() -> None:
+    inspector = inspect(engine)
+    if "users" not in inspector.get_table_names():
+        return
+
+    user_columns = {column["name"] for column in inspector.get_columns("users")}
+    if "is_admin" in user_columns:
+        return
+
+    with engine.begin() as connection:
+        connection.execute(
+            text("ALTER TABLE users ADD COLUMN is_admin BOOLEAN NOT NULL DEFAULT 0")
+        )
+
 
 SEED_PRODUCTS = [
     {
@@ -28,6 +45,7 @@ SEED_PRODUCTS = [
 
 def init_db() -> None:
     Base.metadata.create_all(bind=engine)
+    _ensure_user_admin_column()
 
     with Session(engine) as db:
         if db.query(ProductModel).first() is not None:
